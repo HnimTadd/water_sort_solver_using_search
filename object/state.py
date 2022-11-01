@@ -1,4 +1,3 @@
-
 # from tube import tube
 class State:
     # tubes: list tube
@@ -41,9 +40,8 @@ class State:
     def is_finish(self):
         # return len(self.nTubes) == 0
         for i in self.cState:
-            if i.is_finish():
-                continue
-            return False
+            if not i.is_finish():
+                return False
         return True
 
     # def is_finish(self):
@@ -56,6 +54,7 @@ class State:
     #     return True
 
     def get_cost(self):
+        # return -4
         return sum([i.get_cost() for i in self.cState])
 
     def change_tube(self, new_tube, pos):
@@ -63,6 +62,25 @@ class State:
 
     def get_tube(self, pos):
         return self.cState[pos].get_copy()
+
+    # def __eq__(self, other):
+    #     if self.get_num_tube() != state.get_num_tube():
+    #         return False
+    #     for i in self.cState:
+    #         flag = False
+    #         for j in state.cState:
+    #             if i.equal(j):
+    #                 flag = True
+    #         if not flag:
+    #             return False
+    #     for i in state.cState:
+    #         flag = False
+    #         for j in self.cState:
+    #             if i.equal(j):
+    #                 flag = True
+    #         if not flag:
+    #             return False
+    #     return True
 
     def equal(self, state):
         if self.get_num_tube() != state.get_num_tube():
@@ -96,12 +114,12 @@ class State:
         self.pAction = p_action
 
     def get_copy(self):
-        return State(self.cState[:],)
+        return State(self.cState[:], )
 
     # def get_d_cost(self, list):
     #     return list[0].get_cost() - self.get_cost()
 
-# return all avail state this state can reach if do the action
+    # return all avail state this state can reach if do the action
     def avail_next_state(self):
         results = []
         for i in range(self.get_num_tube()):
@@ -115,28 +133,13 @@ class State:
                 if temp:
                     current_state.change_tube(tube1, i)
                     current_state.change_tube(tube2, j)
-                    # if tube2.get_cost() == -3:
-                    #     current_state.nTubes.pop(j)
-                    #     print("Popped")
                     flag = False
                     for it in results:
                         if current_state.equal(it[0]):
                             flag = True
                     if not flag:
                         results.append([current_state, (i, j)])
-        # results.sort(key=self.get_d_cost, reverse=True)
-        # print("Current:")
-        # for iter in results:
-        #     print(self.get_d_cost(iter), iter[1][0], iter[1][1])
         return results
-
-    # def getstr(self):
-    #     return "\n".join(' '.join(str(i) for i in s.get_full_tube()) for s in self.cState)
 
     def __str__(self):
         return "||||".join('-'.join(str(i) for i in s.get_full_tube()) for s in self.cState)
-
-    # action = [i, j], i is poor out tube, j is poor in tube
-    def act(self, action):
-        i, j = action
-        self.cState[i].poor_to(self.cState[j])

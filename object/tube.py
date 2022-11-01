@@ -69,7 +69,9 @@ class Tube:
         for i in range(self.get_current_volume() - 1):
             if self.color[i] != self.color[i+1]:
                 res += 1
+                # res += i+1
             else:
+                # res -= i + 1
                 res -= 1
         return res
 

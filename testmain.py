@@ -16,21 +16,21 @@ elif len(sys.argv) == 3:
 else:
     # level =[5]
     # level = [i for i in range(1, 41)]
-    level = [13]
-    method = "BFS"
+    level = [6]
+    method = "as"
     # print("error")
     # exit()
-# print(level)
 
-def get_input(level):
-    print("Level = {}".format(level))
-    y = ".//*[@id='{}']".format(level)
+
+def get_input(lv):
+    print("Level = {}".format(lv))
+    y = ".//*[@id='{}']".format(lv)
     x = root.findall(y)[0]
     tube = [list(map(int, t.text.split('_').__reversed__()))
             for t in x.iter('glass')]
     for i in tube:
         # print(i)
-        while len(i) != 0 and i[-1] == 0 :
+        while len(i) != 0 and i[-1] == 0:
             i.pop(-1)
         # print(i)
     n = 4
@@ -58,6 +58,7 @@ def main(levels):
             res, solutions = game.a_search()
         if res and solutions is not None:
             # game.print_solution(solutions)
+            # print("s")
             print(len(solutions[1]))
 
 
