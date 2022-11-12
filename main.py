@@ -39,8 +39,8 @@ def main(input_data):
         solutions = game.solve(level, algorithm)
         end_mem = psutil.Process(os.getpid()).memory_info().rss
         end = time.time()
-        print("Memory usage: ", (end_mem - begin_mem) * 1e-6, "MB")
-        print("Time to solve: {}".format(end - start))
+        print("Memory usage: {:.3f}".format((end_mem - begin_mem) * 1e-6), "MB")
+        print("Time to solve: {:.3f}".format(end - start), "second")
         if solutions is not None:
             print("Step to complete: {}".format(len(solutions)))
             input()
@@ -55,5 +55,6 @@ def main(input_data):
     sys.exit()
 
 
-input_data = process_input(parse_input())
-main(input_data)
+if __name__ == '__main__':
+    input_parse = process_input(parse_input())
+    main(input_parse)

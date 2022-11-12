@@ -42,12 +42,13 @@ class WatersortDemo:
     def __init__(self, initial_state):
         self.initial_state = initial_state
 
-    def demo_by_step(self, actions):
+    def demo_by_step(self, actions, level):
         n_state = self.initial_state
         step = 0
         i = 0
         while 0 <= i < len(actions):
             clear_scr()
+            print(f'Level: {level}')
             print(get_frame(n_state))
             print("Step {}: Pour from {} to {} \n".format(
                 step, actions[i][0] + 1, actions[i][1] + 1))
@@ -70,11 +71,12 @@ class WatersortDemo:
         if i == len(actions):
             print("Done in {} steps".format(step))
 
-    def demo(self, actions, delays):
+    def demo(self, actions, delays, level):
         n_state = self.initial_state
         step = 0
         for action in actions:
             clear_scr()
+            print(f'Level: {level}')
             print(get_frame(n_state))
             n_state = n_state.move(action)
             step += 1
@@ -112,6 +114,8 @@ class WaterSort:
         return state
 
     def solve(self, level, algorithm):
+        if level is not None:
+            self.current_level = level
         if algorithm.upper() == "DFS":
             frontier = fr.StackFrontier()
             self.initial_state = self.get_input(level, "BLIND")
@@ -138,8 +142,7 @@ class WaterSort:
     def demo(self, action, by_step, delay=0.5):
         demo = WatersortDemo(self.initial_state)
         if by_step:
-            demo.demo_by_step(action)
+            demo.demo_by_step(action, self.current_level)
         else:
-            demo.demo(action, delay)
+            demo.demo(action, delay, self.current_level)
         return
-
